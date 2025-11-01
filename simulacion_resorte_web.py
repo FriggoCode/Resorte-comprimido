@@ -1,8 +1,5 @@
 import streamlit as st
 import numpy as np
-# Configuración CRUCIAL para Matplotlib en servidores
-import matplotlib
-matplotlib.use('Agg')  # Backend no interactivo
 import matplotlib.pyplot as plt
 from scipy.integrate import quad
 import io
@@ -38,18 +35,14 @@ class SimulacionResorteWeb:
     
     def _dibujar_resorte(self, compresion_actual):
         """Dibuja la representación física del resorte"""
-        # Configurar figura explícitamente para evitar warnings
-        plt.ioff()  # Desactivar modo interactivo
-        fig, ax = plt.subplots(figsize=(8, 3))
-        
         longitud_actual = self.longitud_natural - compresion_actual
         
+        fig, ax = plt.subplots(figsize=(8, 3))
         # Crear forma del resorte
-        if longitud_actual > 0:
-            x_resorte = np.linspace(0, longitud_actual, 100)
-            y_resorte = 0.1 * np.sin(20 * x_resorte / longitud_actual) * (x_resorte / longitud_actual)
-            ax.plot(x_resorte, y_resorte, 'b-', linewidth=3, label='Resorte')
+        x_resorte = np.linspace(0, longitud_actual, 100)
+        y_resorte = 0.1 * np.sin(20 * x_resorte / longitud_actual) * (x_resorte / longitud_actual)
         
+        ax.plot(x_resorte, y_resorte, 'b-', linewidth=3, label='Resorte')
         ax.plot([0, 0], [-0.2, 0.2], 'k-', linewidth=4, label='Punto fijo')
         ax.plot([longitud_actual, longitud_actual], [-0.15, 0.15], 'r-', linewidth=6, label='Punto móvil')
         
@@ -61,7 +54,6 @@ class SimulacionResorteWeb:
         ax.grid(True, alpha=0.3)
         ax.set_aspect('equal')
         
-        plt.ion()  # Reactivar modo interactivo
         return fig
 
 def main():
@@ -273,3 +265,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+    )
+
+if __name__ == "__main__":
+    main()
+
